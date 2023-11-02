@@ -15,6 +15,7 @@ def getLogger(name):
 
     # create the logging file handler
     FILEPATH = '%s/%s.log' %(CONF['logging']['log_folder'], 'fdmgmt')
+    fh = logging.FileHandler(FILEPATH)
     formatter = logging.Formatter('%(asctime)s %(levelname)s '  
                                   '%(lineno)s %(name)s.%(funcName)s [-] %(message)s ')
 
