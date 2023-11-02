@@ -1,0 +1,17 @@
+[DEFAULT]
+default_restore_machine = iron-controller-1
+backup_restore_machine = iron-controller-2
+
+[logging]
+log_level = debug
+log_folder = /opt/
+log_folder_alt = /var/log/
+
+[mysqld]
+username = username
+hostname = hostname
+password = password
+
+[backup]
+username = username
+password = password
