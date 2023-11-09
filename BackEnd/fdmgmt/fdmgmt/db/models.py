@@ -18,7 +18,7 @@ class MonAn(Base):
     )
     TenMA = sa.Column(sa.String(100), nullable=False)
     ChiTietMA = sa.Column(sa.String(500), nullable=False)
-    Gia = sa.Column(sa.Numeric, nullable=False)
+    Gia = sa.Column(sa.Integer, nullable=False)
     AnhMA = sa.Column(sa.String(1024), nullable=False)
     SoLuongMA = sa.Column(sa.Integer, nullable=False)
     Active = sa.Column(sa.Integer, default=0)
@@ -46,7 +46,7 @@ class HoaDon(Base):
     MaKH = sa.Column(sa.Integer, sa.ForeignKey('KhachHang.MaKH'))
     NgayTao = sa.Column(sa.Date, default=sa.func.current_date())
     SoLuong = sa.Column(sa.Integer)
-    TongTien = sa.Column(sa.Numeric)
+    TongTien = sa.Column(sa.Integer)
     isDeleted = sa.Column(sa.Integer, default=0)
 
 class TaiKhoan(Base):
@@ -73,7 +73,7 @@ class DonDatHang(Base):
         nullable=False
     )
     NgayDat = sa.Column(sa.Date, default=sa.func.current_date())
-    TongTien = sa.Column(sa.Numeric)
+    TongTien = sa.Column(sa.Integer)
     isDeleted = sa.Column(sa.Integer, default=0)
 
 class ChiTietDonDatHang(Base):
@@ -92,8 +92,8 @@ class ChiTietDonDatHang(Base):
         nullable=False
     )
     SoLuong = sa.Column(sa.Integer)
-    Gia = sa.Column(sa.Numeric)
-    TongTien = sa.Column(sa.Numeric, nullable=False)
+    Gia = sa.Column(sa.Integer)
+    TongTien = sa.Column(sa.Integer, nullable=False)
     isDeleted = sa.Column(sa.Integer, default=0)
 
 class GioHang(Base):
@@ -112,5 +112,5 @@ class GioHang(Base):
         nullable=False
     )
     SoLuong = sa.Column(sa.Integer, nullable=False)
-    TongTien = sa.Column(sa.Numeric)
+    TongTien = sa.Column(sa.Integer)
     NgayThemGioHang = sa.Column(sa.Date, default=sa.func.current_date())
