@@ -86,7 +86,6 @@ class DatabaseUtils(db.DatabaseConnector):
     def _gio_hang_model_add(self, MaGioHang, MaKH, MaMA, 
                             SoLuong, TongTien, NgayThemGioHang):
         item_values = {
-            'MaGioHang': MaGioHang,
             'MaKH': MaKH,
             'MaMA': MaMA,
             'SoLuong': SoLuong,
@@ -109,8 +108,8 @@ class DatabaseUtils(db.DatabaseConnector):
             LOG.error('Insert failed: %s' %e)
         finally:
             self._session.close()
-    
-    def _mon_an_model_udapte(self, MaMA, Gia, SoLuong):
+
+     def _mon_an_model_udapte(self, MaMA, Gia, SoLuong):
         try:
             mon_an = self._session.get(models.MonAn, MaMA)
             if not mon_an:
@@ -127,7 +126,7 @@ class DatabaseUtils(db.DatabaseConnector):
             LOG.error('Update failed: %s' %e)
         finally:
             self._session.close()
-
+    
     def _mon_an_model_delete(self, MaMA):
         try:
             mon_an = self._session.get(models.MonAn, MaMA)
@@ -135,8 +134,8 @@ class DatabaseUtils(db.DatabaseConnector):
                 LOG.info('Item did not exist')
                 return False
             else:
-                LOG.debug('Deleting new item')
-                self._session.delete(mon_an)
+                LOG.debug('Deleting item')
+                mon_an.isDeleted = 1
                 self._session.commit()
                 return True
         except Exception as e:
@@ -144,4 +143,18 @@ class DatabaseUtils(db.DatabaseConnector):
         finally:
             self._session.close()
 
-
+    def _gio_hang_model_delete(self, MaMA):
+        try:
+            mon_an = self._session.get(models.GioHang, MaGioHang)
+            if not mon_an:
+                LOG.info('Item did not exist')
+                return False
+            else:
+                LOG.debug('Deleting item')
+                mon_an.isDeleted = 1
+                self._session.commit()
+                return True
+        except Exception as e:
+            LOG.error('Delete failed: %s' %e)
+        finally:
+            self._session.close()

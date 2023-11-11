@@ -1,27 +1,33 @@
-from fdmgmt.utils import utils
-from fdmgmt.common import conf as cfg 
 import json
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+from fdmgmt.utils import utils
+from fdmgmt.common import conf as cfg 
 
 CONF = cfg.CONF
 
 app = Flask(__name__)
+CORS(app)
 db_utils = utils.DatabaseUtils()
 
 @app.route('/v1/items', methods=['GET'])
 def get_all_items():
     table_name = request.args.get('table_name')
     try:
-        items = db_utils.get_all_items(table_name)
-        return jsonify(items)
-    except Exception as e:
-        warning = {
-            'error': str(e),
-            'example': {
-                'table_name': 'MonAn'
+        if not table_name:
+            warning = {
+                'warning': 'Missing params',
+                'example': {
+                    'table_name': 'MonAn'
+                }
             }
-        }
-        return jsonify(warning), 400
+            return jsonify(warning), 400
+        else:
+            items = db_utils.get_all_items(table_name)
+            return jsonify(items)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 @app.route('/v1/filter', methods=['GET'])
 def filter():
@@ -29,18 +35,21 @@ def filter():
     table_key = request.args.get('table_key')
     value = request.args.get('value')
     try:
-        items = db_utils.filter_items(table_name, table_key, value) 
-        return jsonify(items)
-    except Exception as e:
-        warning = {
-            'error': str(e),
-            'example': {
-                'table_name': 'MonAn',
-                'table_key': 'MaMA',
-                'value': '1'
+        if not table_name and table_key and value:
+            warning = {
+                'warning': 'Missing params',
+                'example': {
+                    'table_name': 'MonAn',
+                    'table_key': 'MaMA',
+                    'value': '1'
+                }
             }
-        }
-        return jsonify(warning), 400
+            return jsonify(warning), 400
+        else:
+            items = db_utils.filter_items(table_name, table_key, value) 
+            return jsonify(items)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 @app.route('/v1/item', methods=['GET'])
 def get_item():
@@ -48,21 +57,23 @@ def get_item():
     table_key = request.args.get('table_key')
     value = request.args.get('value')
     try:
-        item = db_utils.get_item(table_name, table_key, value)
-        print(item)
-        if not item:
-            return jsonify({'error': 'key has to be the uniq object such as ID'}), 400
-        return jsonify(item)
-    except Exception as e:
-        warning = {
-            'error': str(e),
-            'example': {
-                'table_name': 'MonAn',
-                'table_key': 'MaMA',
-                'value': '1'
+        if not table_name and table_key and value:
+            warning = {
+                'warning': 'Missing params',
+                'example': {
+                    'table_name': 'MonAn',
+                    'table_key': 'MaMA',
+                    'value': '1'
+                }
             }
-        }
-        return jsonify(warning), 400
+            return jsonify(warning), 400
+        else:
+            item = db_utils.get_item(table_name, table_key, value)
+            if not item:
+                return jsonify({'error': 'key has to be the uniq object such as ID'}), 400
+            return jsonify(item)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 @app.route('/v1/add_mon_an', methods=['POST'])
 def add_mon_an():
@@ -83,6 +94,26 @@ def add_mon_an():
 
     except Exception as e:
         return jsonify({'error': str(e)})
+
+@app.route('/v1/add_gio_hang', methods=['POST'])
+def add_gio_hang():
+    try:
+        MaKH = request.args.get('MaKH')
+        MaMA = request.args.get('MaMA')
+        SoLuong = request.args.get('SoLuong')
+        TongTien = request.args.get('TongTien')
+        NgayThemGioHang = request.args.get('NgayThemGioHang')
+
+        success = db_utils._gio_hang_model_add(self, MaKH, MaMA, SoLuong, 
+                                                TongTien, NgayThemGioHang)
+        if success:
+            return jsonify({'message': 'Item added successfully'})
+        else:
+            return jsonify({'message': 'Item already exists'})
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 
 @app.route('/v1/update_mon_an', methods=['PATCH'])
 def update_mon_an():
@@ -126,4 +157,4 @@ def delete_item():
         return jsonify(warning), 400
 
 if __name__ == '__main__':
-    app.run(debug=True, host=CONF['DEFAULT']['hostname'], port=CONF['DEFAULT']['hostport'])
+    app.run()
