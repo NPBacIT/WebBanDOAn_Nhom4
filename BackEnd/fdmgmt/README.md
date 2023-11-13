@@ -4,14 +4,16 @@
 1. Create database and insert data
 ```
 docker-compose up -d
+
+- install microsoft azure data studio
+https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=win-install%2Cwin-user-install%2Credhat-install%2Cwindows-uninstall%2Credhat-uninstall
+NOTE: You can use microsoft azure data studio to execute .sql or simply using Windows and DBMS. Read the docs for installation
 ```
-- NOTE: You can use microsoft azure data studio to execute .sql or simply using Windows and DBMS
 
 2. Connect to DB and use sqlcmd to query
 ```
 root@ops-huynda-nodedb:~# docker ps
 CONTAINER ID   IMAGE                                        COMMAND                  CREATED       STATUS       PORTS                                           	NAMES
-aad14346999e   api                                          "gunicorn api:app --…"   6 hours ago   Up 6 hours   0.0.0.0:<port>-><port>/tcp, :::<port>-><port>/tcp   	relaxed_bohr
 459430cb716a   mcr.microsoft.com/mssql/server:2019-latest   "/opt/mssql/bin/perm…"   10 days ago   Up 10 days   0.0.0.0:<port>-><port>/tcp, :::<port>-><port>/tcp       sqlserver
 root@ops-huynda-nodedb:~# docker exec -it 459430cb716a bash
 
@@ -51,5 +53,11 @@ MaMA        TenMA                                                               
 3. Run dockerfile
 ```
 docker build -f Dockerfile -t api <dockerfile_path>
-docker run -p <port>:<port> -d api
+docker run -p <port>:<port> --name <app_name> -d api
+```
+
+4. Test using postman
+```
+NOTE: Read the docs for installation or simply use Postman on the web
+https://www.postman.com/downloads/
 ```
