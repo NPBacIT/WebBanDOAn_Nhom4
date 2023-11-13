@@ -3,8 +3,8 @@
 ##i Installation
 1. Docker installation
 - Using docker desktop for windows with hyper-V or wsl(recommended), docker engine for Linux user
-[docker desktop](https://docs.docker.com/desktop/install/windows-install/)
-[docker engine](https://docs.docker.com/engine/install)
+	+ [docker desktop](https://docs.docker.com/desktop/install/windows-install/)
+	+ [docker engine](https://docs.docker.com/engine/install)
 
 - Install docker-compose
 ```
@@ -19,7 +19,7 @@ docker-compose up -d
 
 - install microsoft azure data studio
 [microsoft azure data studio](https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=win-install%2Cwin-user-install%2Credhat-install%2Cwindows-uninstall%2Credhat-uninstall)
-NOTE: You can use microsoft azure data studio to execute .sql or simply using Windows and DBMS. Read the docs for installation
+- NOTE: You can use microsoft azure data studio to execute .sql or simply using Windows and DBMS. Read the docs for installation
 
 3. Connect to DB and use sqlcmd to query
 ```
@@ -68,5 +68,5 @@ docker run -p <port>:<port> --name <app_name> -d api
 ```
 
 5. Test using postman
-NOTE: Read the docs for installation or simply use Postman on the web
-[postman](https://www.postman.com/downloads/)
+- NOTE: Read the docs for installation or simply use Postman on the web
+- [postman](https://www.postman.com/downloads/)
