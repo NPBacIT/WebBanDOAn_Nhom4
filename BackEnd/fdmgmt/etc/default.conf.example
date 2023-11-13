@@ -1,17 +1,6 @@
-[DEFAULT]
-default_restore_machine = iron-controller-1
-backup_restore_machine = iron-controller-2
-
 [logging]
 log_level = debug
-log_folder = /opt/
-log_folder_alt = /var/log/
+log_folder = /var/log
 
-[mysqld]
-username = username
-hostname = hostname
-password = password
-
-[backup]
-username = username
-password = password
+[database]
+connection = mssql+pyodbc://MSSQL_USER:MSSQL_PASSWORD@nodedb/MSSQL_DATABASE?driver=/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.10.so.5.1
