@@ -24,7 +24,7 @@ COPY . /app
 RUN pip install -r /app/fdmgmt/requirements.txt
 RUN pip install -e /app/fdmgmt/
 
-# Make port 5000 available to the world outside this container
+# Make port available to the world outside this container
 EXPOSE 23031
 
 WORKDIR /app/fdmgmt/fdmgmt
