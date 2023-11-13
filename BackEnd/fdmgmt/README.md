@@ -1,16 +1,27 @@
 # Simple backend for food managament website
 
-## Installation
-1. Create database and insert data
+##i Installation
+1. Docker installation
+- Using docker desktop for windows with hyper-V or wsl(recommended), docker engine for Linux user
+[docker desktop](https://docs.docker.com/desktop/install/windows-install/)
+[docker engine](https://docs.docker.com/engine/install)
+
+- Install docker-compose
+```
+root@ops-huynda-nodedb:~# apt-get update
+root@ops-huynda-nodedb:~# apt-get install docker-compose
+```
+
+2. Create database and insert data
 ```
 docker-compose up -d
-
-- install microsoft azure data studio
-https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=win-install%2Cwin-user-install%2Credhat-install%2Cwindows-uninstall%2Credhat-uninstall
-NOTE: You can use microsoft azure data studio to execute .sql or simply using Windows and DBMS. Read the docs for installation
 ```
 
-2. Connect to DB and use sqlcmd to query
+- install microsoft azure data studio
+[microsoft azure data studio](https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=win-install%2Cwin-user-install%2Credhat-install%2Cwindows-uninstall%2Credhat-uninstall)
+NOTE: You can use microsoft azure data studio to execute .sql or simply using Windows and DBMS. Read the docs for installation
+
+3. Connect to DB and use sqlcmd to query
 ```
 root@ops-huynda-nodedb:~# docker ps
 CONTAINER ID   IMAGE                                        COMMAND                  CREATED       STATUS       PORTS                                           	NAMES
@@ -50,14 +61,12 @@ MaMA        TenMA                                                               
           9 French Fries                                                                                                  15
 ```
 
-3. Run dockerfile
+4. Run dockerfile
 ```
 docker build -f Dockerfile -t api <dockerfile_path>
 docker run -p <port>:<port> --name <app_name> -d api
 ```
 
-4. Test using postman
-```
+5. Test using postman
 NOTE: Read the docs for installation or simply use Postman on the web
-https://www.postman.com/downloads/
-```
+[postman](https://www.postman.com/downloads/)
