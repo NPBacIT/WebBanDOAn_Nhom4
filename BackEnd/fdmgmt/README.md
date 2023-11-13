@@ -3,26 +3,25 @@
 ##i Installation
 1. Docker installation
 - Using docker desktop for windows with hyper-V or wsl(recommended), docker engine for Linux user
-	+ [docker desktop](https://docs.docker.com/desktop/install/windows-install/)
-	+ [docker engine](https://docs.docker.com/engine/install)
+	+ Install [docker desktop](https://docs.docker.com/desktop/install/windows-install/)
+	+ Install [docker engine](https://docs.docker.com/engine/install)
 
 - Install docker-compose
-```
+```bash
 root@ops-huynda-nodedb:~# apt-get update
 root@ops-huynda-nodedb:~# apt-get install docker-compose
 ```
 
 2. Create database and insert data
-```
+```bash
 docker-compose up -d
 ```
 
-- install microsoft azure data studio
-[microsoft azure data studio](https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=win-install%2Cwin-user-install%2Credhat-install%2Cwindows-uninstall%2Credhat-uninstall)
+- install microsoft azure data studio: [microsoft azure data studio](https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=win-install%2Cwin-user-install%2Credhat-install%2Cwindows-uninstall%2Credhat-uninstall)
 - NOTE: You can use microsoft azure data studio to execute .sql or simply using Windows and DBMS. Read the docs for installation
 
 3. Connect to DB and use sqlcmd to query
-```
+```bash
 root@ops-huynda-nodedb:~# docker ps
 CONTAINER ID   IMAGE                                        COMMAND                  CREATED       STATUS       PORTS                                           	NAMES
 459430cb716a   mcr.microsoft.com/mssql/server:2019-latest   "/opt/mssql/bin/perm…"   10 days ago   Up 10 days   0.0.0.0:<port>-><port>/tcp, :::<port>-><port>/tcp       sqlserver
@@ -62,11 +61,10 @@ MaMA        TenMA                                                               
 ```
 
 4. Run dockerfile
-```
+```bash
 docker build -f Dockerfile -t api <dockerfile_path>
 docker run -p <port>:<port> --name <app_name> -d api
 ```
 
 5. Test using postman
-- NOTE: Read the docs for installation or simply use Postman on the web
-- [postman](https://www.postman.com/downloads/)
+- Read the docs for installation or simply use Postman on the web: [postman](https://www.postman.com/downloads/)
