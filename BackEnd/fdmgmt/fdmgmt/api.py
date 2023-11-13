@@ -14,17 +14,22 @@ db_utils = utils.DatabaseUtils()
 @app.route('/v1/items', methods=['GET'])
 def get_all_items():
     table_name = request.args.get('table_name')
+    order_by_column = request.args.get('order_by_column')
+    page = request.args.get('page', default=1, type=int)
+    items_per_page = request.args.get('items_per_page', default=5, type=int)
     try:
-        if not table_name:
+        if not (table_name and order_by_column):
             warning = {
-                'warning': 'Missing params',
+                'error': 'Missing params',
                 'example': {
-                    'table_name': 'MonAn'
+                    'table_name': 'MonAn',
+                    'order_by_column': 'MaMA',
                 }
             }
             return jsonify(warning), 400
         else:
-            items = db_utils.get_all_items(table_name)
+            items = db_utils.get_all_items(table_name, order_by_column, 
+                                            page, items_per_page)
             return jsonify(items)
     except Exception as e:
         return jsonify({'error': str(e)}), 400
@@ -37,7 +42,7 @@ def filter():
     try:
         if not table_name and table_key and value:
             warning = {
-                'warning': 'Missing params',
+                'error': 'Missing params',
                 'example': {
                     'table_name': 'MonAn',
                     'table_key': 'MaMA',
@@ -59,7 +64,7 @@ def get_item():
     try:
         if not table_name and table_key and value:
             warning = {
-                'warning': 'Missing params',
+                'error': 'Missing params',
                 'example': {
                     'table_name': 'MonAn',
                     'table_key': 'MaMA',

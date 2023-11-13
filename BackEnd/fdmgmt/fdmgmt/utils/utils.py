@@ -12,12 +12,17 @@ class DatabaseUtils(db.DatabaseConnector):
     def __init__(self):
         super(DatabaseUtils, self).__init__()
 
-    def get_all_items(self, table_name):
+    def get_all_items(self, table_name, order_by_column,
+                    page, items_per_page=None):
         if table_name in mapping.tables:
             Model = mapping.tables[table_name]
         try:
             LOG.debug('Getting all items from %s' %Model)
-            results = self._session.query(Model).all()
+            if items_per_page:
+                offset = (page - 1) * items_per_page
+                LOG.debug(offset)
+                results = (self._session.query(Model).order_by(getattr(Model, order_by_column)).
+                            offset(offset).limit(items_per_page).all())
             vals = [{k: v for k, v in result.__dict__.items() 
                     if k != '_sa_instance_state'} for result in results]
             return vals
@@ -68,16 +73,11 @@ class DatabaseUtils(db.DatabaseConnector):
         } 
 
         try:
-            existing_item = self._session.query(models.MonAn).filter_by(**item_values).first()
-            if existing_item:
-                LOG.info('Item exist')
-                return False
-            else:
-                LOG.debu('Inserting new items')
-                mon_an = models.MonAn(**item_values)
-                self._session.add(mon_an)
-                self._session.commit()
-                return True
+            LOG.debug('Inserting new items')
+            mon_an = models.MonAn(**item_values)
+            self._session.add(mon_an)
+            self._session.commit()
+            return True
         except Exception as e:
             LOG.error('Insert failed: %s' %e)
         finally:
@@ -86,7 +86,7 @@ class DatabaseUtils(db.DatabaseConnector):
     def _gio_hang_model_add(self, MaGioHang, MaKH, MaMA, 
                             SoLuong, TongTien, NgayThemGioHang):
         item_values = {
-            'MaKH': MaKH,
+            'id_user': MaKH,
             'MaMA': MaMA,
             'SoLuong': SoLuong,
             'TongTien': TongTien,
@@ -94,22 +94,17 @@ class DatabaseUtils(db.DatabaseConnector):
         } 
 
         try:
-            existing_item = self._session.query(models.GioHang).filter_by(**item_values).first()
-            if existing_item:
-                LOG.info('Item exist')
-                return False
-            else:
-                LOG.debug('Inserting new items')
-                mon_an = models.GioHang(**item_values)
-                self._session.add(mon_an)
-                self._session.commit()
-                return True
+            LOG.debug('Inserting new items')
+            mon_an = models.GioHang(**item_values)
+            self._session.add(mon_an)
+            self._session.commit()
+            return True
         except Exception as e:
             LOG.error('Insert failed: %s' %e)
         finally:
             self._session.close()
 
-     def _mon_an_model_udapte(self, MaMA, Gia, SoLuong):
+    def _mon_an_model_udapte(self, MaMA, Gia, SoLuong):
         try:
             mon_an = self._session.get(models.MonAn, MaMA)
             if not mon_an:

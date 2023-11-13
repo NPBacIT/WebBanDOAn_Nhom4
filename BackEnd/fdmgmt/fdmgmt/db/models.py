@@ -25,16 +25,19 @@ class MonAn(Base):
     isDeleted = sa.Column(sa.Integer, default=0)
     MaLoaiMA = sa.Column(sa.Integer, sa.ForeignKey('LoaiMonAn.MaLoaiMA'))
 
-class KhachHang(Base):
-    __tablename__ = 'KhachHang'
-    MaKH = sa.Column(
+class TaiKhoan(Base):
+    __tablename__ = 'TaiKhoan'
+    id_user = sa.Column(
         sa.Integer, primary_key=True, autoincrement=True
     )
-    AnhKH = sa.Column(sa.String(1024), nullable=False)
-    TenKH = sa.Column(sa.String(100), nullable=False)
-    SDTKH = sa.Column(sa.String(20), nullable=False)
-    EmailKH = sa.Column(sa.String(30), nullable=False)
-    DiaChi = sa.Column(sa.String(100), nullable=False)
+    username = sa.Column(sa.String(30), nullable=False)
+    Pass = sa.Column(sa.String(30), nullable=False)
+    sdt = sa.Column(sa.String(20))
+    email = sa.Column(sa.String(30), nullable=False)
+    loai = sa.Column(sa.String(20))
+    AnhKH = sa.Column(sa.String(1024))
+    TenKH = sa.Column(sa.String(100))
+    DiaChi = sa.Column(sa.String(100))
     isDeleted = sa.Column(sa.Integer, default=0)
 
 class HoaDon(Base):
@@ -43,24 +46,12 @@ class HoaDon(Base):
         sa.Integer, primary_key=True, autoincrement=True
     )
     MaMA = sa.Column(sa.Integer, sa.ForeignKey('MonAn.MaMA'))
-    MaKH = sa.Column(sa.Integer, sa.ForeignKey('KhachHang.MaKH'))
+    id_user = sa.Column(sa.Integer, sa.ForeignKey('KhachHang.id_user'))
     NgayTao = sa.Column(sa.Date, default=sa.func.current_date())
     SoLuong = sa.Column(sa.Integer)
     TongTien = sa.Column(sa.Integer)
     isDeleted = sa.Column(sa.Integer, default=0)
 
-class TaiKhoan(Base):
-    __tablename__ = 'TaiKhoan'
-    id = sa.Column(
-        sa.Integer, primary_key=True, autoincrement=True
-    )
-    username = sa.Column(sa.String(30), nullable=False)
-    Pass = sa.Column(sa.String(30), nullable=False)
-    email = sa.Column(sa.String(30), nullable=False)
-    loai = sa.Column(sa.String(20))
-    MaNV = sa.Column(sa.Integer)
-    MaKH = sa.Column(sa.Integer, sa.ForeignKey('KhachHang.MaKH'))
-    isDeleted = sa.Column(sa.Integer, default=0)
 
 class DonDatHang(Base):
     __tablename__ = 'DonDatHang'
@@ -69,7 +60,7 @@ class DonDatHang(Base):
     )
     MaKH = sa.Column(
         sa.Integer, 
-        sa.ForeignKey('KhachHang.MaKH'), 
+        sa.ForeignKey('KhachHang.id_user'), 
         nullable=False
     )
     NgayDat = sa.Column(sa.Date, default=sa.func.current_date())
@@ -103,7 +94,7 @@ class GioHang(Base):
     )
     MaKH = sa.Column(
         sa.Integer, 
-        sa.ForeignKey('KhachHang.MaKH'), 
+        sa.ForeignKey('KhachHang.id_user'), 
         nullable=False
     )
     MaMA = sa.Column(
