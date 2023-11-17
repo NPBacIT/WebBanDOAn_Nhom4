@@ -28,8 +28,6 @@ class DatabaseUtils(db.DatabaseConnector):
             return vals
         except Exception as e:
             LOG.error('Cannot get column names from tables: %s' %e)
-        finally:
-            self._session.close()
         return None
 
     def filter_items(self, table_name, table_key, value):
@@ -42,8 +40,6 @@ class DatabaseUtils(db.DatabaseConnector):
             return vals
         except Exception as e:
             LOG.error('Cannot get items: %s' %e)
-        finally:
-            self._session.close()
 
     def get_item(self, table_name, table_key, value):
         """table_key has to be uniq like ID"""
@@ -57,8 +53,6 @@ class DatabaseUtils(db.DatabaseConnector):
             return val
         except Exception as e:
             LOG.error('Cannot get items: %s' %e)
-        finally:
-            self._session.close()
         return None
 
     def _mon_an_model_add(self, TenMA, ChiTietMA, Gia,
@@ -80,17 +74,14 @@ class DatabaseUtils(db.DatabaseConnector):
             return True
         except Exception as e:
             LOG.error('Insert failed: %s' %e)
-        finally:
-            self._session.close()
 
-    def _gio_hang_model_add(self, MaGioHang, MaKH, MaMA, 
-                            SoLuong, TongTien, NgayThemGioHang):
+    def _gio_hang_model_add(self, id_user, MaMA, 
+                            SoLuong, TongTien):
         item_values = {
-            'id_user': MaKH,
+            'id_user': id_user,
             'MaMA': MaMA,
             'SoLuong': SoLuong,
             'TongTien': TongTien,
-            'NgayThemGioHang': NgayThemGioHang
         } 
 
         try:
@@ -101,10 +92,29 @@ class DatabaseUtils(db.DatabaseConnector):
             return True
         except Exception as e:
             LOG.error('Insert failed: %s' %e)
-        finally:
-            self._session.close()
+    
+    def _tai_khoan_model_add(self, username, password, sdt,
+                            email, loai, TenKH, DiaChi):
+        item_values = {
+            'username': username,
+            'password': password,
+            'sdt': sdt,
+            'email': email,
+            'loai': loai,
+            'TenKH': TenKH,
+            'DiaChi': DiaChi
+        } 
+        LOG.debug(item_values)
+        try:
+            LOG.debug('Inserting new items')
+            mon_an = models.TaiKhoan(**item_values)
+            self._session.add(mon_an)
+            self._session.commit()
+            return True
+        except Exception as e:
+            LOG.error('Tai khoan insert failed: %s' %e)
 
-    def _mon_an_model_udapte(self, MaMA, Gia, SoLuong):
+    def _mon_an_model_udapte(self, MaMA, Gia, SoLuongMA):
         try:
             mon_an = self._session.get(models.MonAn, MaMA)
             if not mon_an:
@@ -113,14 +123,12 @@ class DatabaseUtils(db.DatabaseConnector):
             else:
                 LOG.debug('Updating new item')
                 mon_an.Gia = Gia
-                mon_an.SoLuong = SoLuong
+                mon_an.SoLuongMA = SoLuongMA
                 self._session.commit()
                 update_record = self.get_item('MonAn', 'MaMA', MaMA)
                 return update_record
         except Exception as e:
             LOG.error('Update failed: %s' %e)
-        finally:
-            self._session.close()
     
     def _mon_an_model_delete(self, MaMA):
         try:
@@ -135,8 +143,6 @@ class DatabaseUtils(db.DatabaseConnector):
                 return True
         except Exception as e:
             LOG.error('Delete failed: %s' %e)
-        finally:
-            self._session.close()
 
     def _gio_hang_model_delete(self, MaMA):
         try:
@@ -151,5 +157,3 @@ class DatabaseUtils(db.DatabaseConnector):
                 return True
         except Exception as e:
             LOG.error('Delete failed: %s' %e)
-        finally:
-            self._session.close()
