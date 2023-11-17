@@ -52,7 +52,6 @@ import axios from 'axios'
             <router-link :to="{ name: 'Dish.update', params: { id: item.MaMA } }"
               class="btn btn-sm btn-dark">Edit</router-link>
             &nbsp;
-            <router-link :to="'/listbookdish/' + item.MaMA" class="btn btn-sm btn-info">Details</router-link> &nbsp;
             <button @click="deleteDish(item.MaMA)" class="btn btn-sm btn-danger">Delete</button>
           </td>
         </tr>
@@ -89,7 +88,7 @@ export default {
   },
   methods: {
     fetchData() {
-      let apiUrl = axios.get(`http://103.69.195.147:23031/v1/items?table_name=MonAn&order_by_column=MaMA&page=${this.currentPage}&items_per_page=${this.itemsPerPage}`)
+      axios.get(`http://103.69.195.147:23031/v1/items?table_name=MonAn&order_by_column=MaMA&page=${this.currentPage}&items_per_page=${this.itemsPerPage}`)
         .then(res => {
           this.items = res.data;
         })

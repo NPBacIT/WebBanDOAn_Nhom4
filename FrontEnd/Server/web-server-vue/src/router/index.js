@@ -1,11 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+// import HomeView from '../views/HomeView.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'Login.login',
+    component: () => import('../views/Login/LoginView.vue')
+  },
+  {
+    path: '/category',
+    name: 'category',
+    component: () => import('../views/Category/CategorView.vue')
   },
   {
     path: '/listDish',
@@ -21,11 +26,6 @@ const routes = [
     path: '/updateDish:id',
     name: 'Dish.update',
     component: () => import('../views/Dish/UpdateDishView.vue')
-  },
-  {
-    path: '/login',
-    name: 'Login.login',
-    component: () => import('../views/Login/LoginView.vue')
   },
   {
     path: '/signup',

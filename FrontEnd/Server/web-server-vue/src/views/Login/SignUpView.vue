@@ -148,7 +148,7 @@ export default {
           phone: Number.parseFloat(this.user.phone),
           address: this.user.address,
         };
-        
+        axios.post(`http://103.69.195.147:23031/v1/add_tai_khoan?TenKH=${payload.fullname}&username=${payload.username}&password=${payload.password}&email=${payload.email}&sdt=${payload.phone}&DiaChi=${payload.address}&`)
       }
     }
   },
