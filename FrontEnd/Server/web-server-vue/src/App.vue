@@ -1,21 +1,13 @@
 <template>
   <div class="app">
     <!-- Sidebar -->
-    <Sidebar />
-
     <!-- Content -->
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Sidebar from './components/Sidebar.vue';
 
-export default {
-  components: {
-    Sidebar,
-  },
-};
 </script>
 
 <style lang="scss">
