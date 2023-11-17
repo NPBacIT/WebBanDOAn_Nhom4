@@ -12,9 +12,9 @@
 
     <h3>Menu</h3>
     <div class="menu">
-      <router-link to="/" class="button">
+      <router-link to="/category" class="button">
         <i class="fa-solid fa-house material-icons"></i>
-        <span class="text">Home</span>
+        <span class="text">Category</span>
       </router-link>
       <router-link to="/listDish" class="button">
         <i class="fa-solid fa-bowl-food material-icons"></i>
@@ -29,7 +29,7 @@
     <div class="flex"></div>
 
     <div class="menu">
-      <router-link to="/login" class="button">
+      <router-link to="/" class="button">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
         <span class="text">Logout</span>
       </router-link>
