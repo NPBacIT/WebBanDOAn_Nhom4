@@ -119,6 +119,7 @@ export default {
         });
     },
     validate() {
+      let isValid = true;
       this.errors = {
         TenMA: '',
         ChiTietMA: '',
@@ -129,28 +130,30 @@ export default {
       };
       if (!this.dish.TenMA) {
         this.errors.TenMA = 'Dish name is required';
+        isValid = false;
       }
       if (!this.dish.ChiTietMA) {
         this.errors.ChiTietMA = 'Dish chitiet is required';
-
+        isValid = false;
       }
       if (!this.dish.Gia) {
         this.errors.Gia = 'Dish price is required';
       } else if (!this.isNumber(this.dish.Gia)) {
         this.errors.Gia = 'Dish price must be a number';
-
+        isValid = false;
       }
       if (!this.dish.SoLuongMA) {
         this.errors.SoLuongMA = 'Dish soluong is required';
-
+        isValid = false;
       } else if (!this.isNumber(this.dish.SoLuongMA)) {
         this.errors.SoLuongMA = 'Dish soluong must be a number';
-
+        isValid = false;
       }
       if (!this.dish.MaLoaiMA) {
         this.errors.MaLoaiMA = 'Dish description is required';
-
+        isValid = false;
       }
+      return isValid;
     },
     isNumber(value) {
       return /^\d*$/.test(value);

@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -83,6 +84,7 @@ export default {
       }
     },
     validate() {
+      let isValid = true;
       // Reset errors
       this.errors = {
         fullname: null,
@@ -96,34 +98,35 @@ export default {
       // Validate each field
       if (!this.user.fullname) {
         this.errors.fullname = 'Full Name is required';
-        
+        isValid = false;
       }
       if (!this.user.username) {
         this.errors.username = 'Username is required';
-        
+        isValid = false;
       }
       if (!this.user.email) {
         this.errors.email = 'Email is required';
-       
+        isValid = false;
       } else if (!this.validateEmail(this.user.email)) {
         this.errors.email = 'Please enter a valid email address';
-       
+        isValid = false;
       }
       if (!this.user.password) {
         this.errors.password = 'Password is required';
-      
+        isValid = false;
       }
       if (!this.user.phone) {
         this.errors.phone = 'Phone is required';
-        
+        isValid = false;
       } else if (!this.validatePhone(this.user.phone)) {
         this.errors.phone = 'Please enter a valid phone number';
-        
+        isValid = false;
       }
       if (!this.user.address) {
         this.errors.address = 'Address is required';
+        isValid = false;
       }
-
+      return isValid;
     },
     validateEmail(email) {
       // Your email validation logic here
@@ -135,6 +138,19 @@ export default {
       // Return true if phone is valid, false otherwise
       return /^\d{10}$/.test(phone);
     },
+    register(){
+      if (this.validate()){
+        const payload = {
+          fullname: this.user.fullname,
+          username: this.user.username,
+          email: this.user.email,
+          password: this.user.password,
+          phone: Number.parseFloat(this.user.phone),
+          address: this.user.address,
+        };
+        
+      }
+    }
   },
 };
 </script>
