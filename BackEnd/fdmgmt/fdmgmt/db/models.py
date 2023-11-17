@@ -31,7 +31,7 @@ class TaiKhoan(Base):
         sa.Integer, primary_key=True, autoincrement=True
     )
     username = sa.Column(sa.String(30), nullable=False)
-    Pass = sa.Column(sa.String(30), nullable=False)
+    password = sa.Column(sa.String(30), nullable=False)
     sdt = sa.Column(sa.String(20))
     email = sa.Column(sa.String(30), nullable=False)
     loai = sa.Column(sa.String(20))

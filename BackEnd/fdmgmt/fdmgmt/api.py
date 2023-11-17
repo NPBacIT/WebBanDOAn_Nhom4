@@ -109,7 +109,7 @@ def add_gio_hang():
         TongTien = request.args.get('TongTien')
         NgayThemGioHang = request.args.get('NgayThemGioHang')
 
-        success = db_utils._gio_hang_model_add(self, MaKH, MaMA, SoLuong, 
+        success = db_utils._gio_hang_model_add(MaKH, MaMA, SoLuong, 
                                                 TongTien, NgayThemGioHang)
         if success:
             return jsonify({'message': 'Item added successfully'})
@@ -119,6 +119,26 @@ def add_gio_hang():
     except Exception as e:
         return jsonify({'error': str(e)})
 
+@app.route('/v1/add_tai_khoan', methods=['POST'])
+def add_tai_khoan():
+    try:
+        username = request.args.get('username')
+        password = request.args.get('password')
+        sdt = request.args.get('sdt')
+        email = request.args.get('email')
+        loai = request.args.get('loai', default='customer')
+        TenKH = request.args.get('TenKH')
+        DiaChi = request.args.get('DiaChi')
+
+        success = db_utils._tai_khoan_model_add(username, password, sdt, 
+                                                email, loai, TenKH, DiaChi)
+        if success:
+            return jsonify({'message': 'Item added successfully'})
+        else:
+            return jsonify({'message': 'Item already exists'})
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 @app.route('/v1/update_mon_an', methods=['PATCH'])
 def update_mon_an():

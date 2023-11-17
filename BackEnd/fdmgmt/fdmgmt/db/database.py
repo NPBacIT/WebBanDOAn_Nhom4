@@ -24,4 +24,6 @@ class DatabaseConnector(object):
             return session
         except Exception as e:
             LOG.error('Cannot connect to mssql server: %s' %e)
-        return None
+        finally:
+            if session:
+                session.close()
