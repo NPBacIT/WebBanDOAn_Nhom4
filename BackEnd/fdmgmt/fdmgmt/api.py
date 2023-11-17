@@ -103,14 +103,12 @@ def add_mon_an():
 @app.route('/v1/add_gio_hang', methods=['POST'])
 def add_gio_hang():
     try:
-        MaKH = request.args.get('MaKH')
+        id_user = request.args.get('id_user')
         MaMA = request.args.get('MaMA')
         SoLuong = request.args.get('SoLuong')
         TongTien = request.args.get('TongTien')
-        NgayThemGioHang = request.args.get('NgayThemGioHang')
 
-        success = db_utils._gio_hang_model_add(MaKH, MaMA, SoLuong, 
-                                                TongTien, NgayThemGioHang)
+        success = db_utils._gio_hang_model_add(id_user, MaMA, SoLuong, TongTien)
         if success:
             return jsonify({'message': 'Item added successfully'})
         else:

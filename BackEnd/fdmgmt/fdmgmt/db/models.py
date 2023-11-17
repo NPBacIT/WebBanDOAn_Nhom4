@@ -92,9 +92,9 @@ class GioHang(Base):
     MaGioHang = sa.Column(
         sa.Integer, primary_key=True, autoincrement=True
     )
-    MaKH = sa.Column(
+    id_user = sa.Column(
         sa.Integer, 
-        sa.ForeignKey('KhachHang.id_user'), 
+        sa.ForeignKey('TaiKhoan.id_user'), 
         nullable=False
     )
     MaMA = sa.Column(

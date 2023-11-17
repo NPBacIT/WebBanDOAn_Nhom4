@@ -75,14 +75,13 @@ class DatabaseUtils(db.DatabaseConnector):
         except Exception as e:
             LOG.error('Insert failed: %s' %e)
 
-    def _gio_hang_model_add(self, MaGioHang, MaKH, MaMA, 
-                            SoLuong, TongTien, NgayThemGioHang):
+    def _gio_hang_model_add(self, id_user, MaMA, 
+                            SoLuong, TongTien):
         item_values = {
-            'id_user': MaKH,
+            'id_user': id_user,
             'MaMA': MaMA,
             'SoLuong': SoLuong,
             'TongTien': TongTien,
-            'NgayThemGioHang': NgayThemGioHang
         } 
 
         try:
